@@ -24,17 +24,7 @@ const TypeForm = () => {
         enrichData: 'no',
     };
 
-    const validationSchema = Yup.object().shape({
-        email: Yup.string().email('Invalid email address').required('This field cannot be left blank'),
-        password: Yup.string()
-            .required('This field cannot be left blank')
-            .min(8, 'Use 8 or more characters')
-            .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                'Must contain 8 characters, at least one uppercase letter, one lowercase letter, and one number'),
-        agreeToTerms: Yup.boolean()
-            .oneOf([true], 'Please accept the terms and conditions to finish the signup')
-            .required('Please accept the terms and conditions to finish the signup'),
-    });
+
 
     const renderErrorMessage = (message) => (
         <div className="flex items-center text-error text-sm mt-1 mb-[10px]">
@@ -67,8 +57,26 @@ const TypeForm = () => {
             enrichData: language === 'English'
                 ? "Enrich my data with select third parties for more relevant content."
                 : "Enriquecer mis datos con terceros seleccionados para contenido más relevante.",
+        },
+        validationMessages: {
+            invalidEmail: language === 'English' ? 'Invalid email address' : 'Dirección de correo electrónico inválida',
+            fieldRequired: language === 'English' ? 'This field cannot be left blank' : 'Este campo no puede estar vacío',
+            minLength: language === 'English' ? 'Use 8 or more characters' : 'Utiliza 8 caracteres o más',
+            acceptTerms: language === 'English' ? 'Please accept the terms and conditions to finish the signup' : 'Por favor, acepta los términos y condiciones para completar el registro',
         }
+
     };
+
+    const validationSchema = Yup.object().shape({
+        email: Yup.string().email(texts.validationMessages.invalidEmail).required(texts.validationMessages.fieldRequired),
+        password: Yup.string()
+            .required(texts.validationMessages.fieldRequired)
+            .min(8, texts.validationMessages.minLength),
+        agreeToTerms: Yup.boolean()
+            .oneOf([true], texts.validationMessages.acceptTerms)
+            .required(texts.validationMessages.acceptTerms),
+    });
+
 
     return (
         <div className='grid grid-cols-1 grid-rows-[52px_auto_52px] relative w-full '>
