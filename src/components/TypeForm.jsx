@@ -25,8 +25,11 @@ const TypeForm = () => {
         password: Yup.string()
             .required('This field cannot be left blank')
             .min(8, 'Use 8 or more characters')
-            .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\^$*.\[\]{}\(\)?\-\"!@#%&/,><\':;|_~`])\S*$/,
-                'Use a mix of letters, numbers, and symbols'),
+            .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+                'Must contain 8 characters, at least one letter, one number, and one special character (@$!%*#?&)'),
+        agreeToTerms: Yup.boolean()
+            .oneOf([true], 'Please agree to the terms')
+            .required('Please agree to the terms'),
     });
 
     // Render error message with MdError icon
@@ -61,7 +64,7 @@ const TypeForm = () => {
                                 <Field name="email" type="email" className="input input-bordered w-full mb-3" placeholder="Email" />
                                 {touched.email && errors.email && renderErrorMessage(errors.email)}
 
-                                <div className="relative mb-3">
+                                <div className="relative mb-3 flex flex-col justify-center">
                                     <Field
                                         name="password"
                                         type={showPassword ? 'text' : 'password'}
@@ -69,7 +72,7 @@ const TypeForm = () => {
                                         placeholder="Password"
                                     />
                                     <div
-                                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                                        className="absolute top-4 my-auto right-0 pr-3 flex text-sm leading-5"
                                         onClick={() => setShowPassword(!showPassword)}
                                     >
                                         {showPassword ? <FaRegEyeSlash className="cursor-pointer text-gray-700" /> : <FaRegEye className="cursor-pointer text-gray-700" />}
@@ -77,9 +80,11 @@ const TypeForm = () => {
                                     {touched.password && errors.password && renderErrorMessage(errors.password)}
                                 </div>
 
-                                <label className="cursor-pointer flex mt-2 mb-3">
-                                    <Field type="checkbox" name="agreeToTerms" className="checkbox mr-2" />
-                                    I agree to the Terms of Service, Privacy Policy, and Data Processing Agreement.
+                                <label className="cursor-pointer mt-2 mb-3">
+                                    <div className='flex '>
+                                        <Field type="checkbox" name="agreeToTerms" className="checkbox mr-2" />
+                                        <div className='text-[14px]'> I agree to the Terms of Service, Privacy Policy, and Data Processing Agreement.</div>
+                                    </div>
                                     {touched.agreeToTerms && errors.agreeToTerms && renderErrorMessage(errors.agreeToTerms)}
                                 </label>
 

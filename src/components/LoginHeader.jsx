@@ -16,7 +16,7 @@ const LoginHeader = () => {
                     <select
                         value={language}
                         onChange={(e) => setLanguage(e.target.value)}
-                        className='bg-transparent border-none text-gray-700 text-sm rounded-md pr-8 pl-2 py-1 appearance-none focus:outline-none focus:ring-0 '
+                        className='bg-ad border-none text-gray-700 text-sm rounded-md pr-8 pl-2 py-1 appearance-none focus:outline-none focus:ring-0 '
                     >
                         <option value="English">English</option>
                         <option value="Español">Español</option>
