@@ -32,8 +32,8 @@ const TypeForm = () => {
             .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/,
                 'Must contain 8 characters, at least one uppercase letter, one lowercase letter, and one number'),
         agreeToTerms: Yup.boolean()
-            .oneOf([true], 'Please agree to the terms')
-            .required('Please agree to the terms'),
+            .oneOf([true], 'Please accept the terms and conditions to finish the signup')
+            .required('Please accept the terms and conditions to finish the signup'),
     });
 
     const renderErrorMessage = (message) => (
@@ -108,9 +108,12 @@ const TypeForm = () => {
                                     {touched.password && errors.password && renderErrorMessage(errors.password)}
                                 </div>
 
-                                <label className="cursor-pointer flex mt-2 mb-3">
-                                    <Field type="checkbox" name="agreeToTerms" className="checkbox mr-2" />
-                                    {texts.termsAgreement}
+                                <label className="cursor-pointer mt-2 mb-3">
+                                    <div className='flex '>
+                                        <Field type="checkbox" name="agreeToTerms" className="checkbox mr-2" />
+                                        <div className='text-[14px]'> {texts.termsAgreement}</div>
+
+                                    </div>
                                     {touched.agreeToTerms && errors.agreeToTerms && renderErrorMessage(errors.agreeToTerms)}
                                 </label>
 
