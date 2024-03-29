@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { IoEarthSharp } from "react-icons/io5";
 import { RiArrowDropDownLine } from 'react-icons/ri';
+import { useLanguage } from './LanguageContext';
+
 
 const LoginHeader = () => {
-    const [language, setLanguage] = useState('English');
+    const { language, setLanguage } = useLanguage();
+
+    const alreadyHaveAccount = language === 'English' ? 'Already have an account?' : '¿Ya tienes una cuenta?';
+    const loginText = language === 'English' ? 'Login' : 'Iniciar sesión';
 
     return (
         <div className='flex justify-between items-center row-start-1 px-5 py-3'>
@@ -24,8 +29,8 @@ const LoginHeader = () => {
                 </div>
             </div>
             <div className='flex justify-end items-center'>
-                <span className='mr-2 text-[14px]'>Already have an account?</span>
-                <a href='#' className='px-2 border py-1 text-[12px] rounded-md border-[#000000]'>Login</a>
+                <span className='mr-2 text-[14px]'>{alreadyHaveAccount}</span>
+                <a href='#' className='px-2 border py-1 text-[12px] rounded-md border-[#000000]'>{loginText}</a>
             </div>
         </div>
     );
